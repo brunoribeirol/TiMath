@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "screen.h"
+#include "keyboard.h"
+#include "timer.h"
+
 typedef struct Node{
     char pergunta;
     int nivel;
