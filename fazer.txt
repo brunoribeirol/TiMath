@@ -1,0 +1,43 @@
+Colocar cor da resposta em uma cor diferenete
+
+
+LISTA ENCADEADA OU PILHA
+
+START
+escolher modo (aleatorio/crescente)
+Primeiro numero gerado aleatoriamente (1-10)
+cria e insere na lista de numeros que vao fazer parte das operacoes
+a depender do modo, randomiza ou ordena os numeros da lista a ser jogada
+
+-Jogo literalmente começa-
+timer inicia
+Jogador só passa para a próxima pergunta quando acertar
+Ranking pelo tempo (menor -> maior)
+Tempo incremental
+Ranking no txt (leaderbord pra sempre) SORT
+Ranking pelo tempo (menor -> maior)
+Divisão não pode para ser por 0
+
+funcao gerarNumneroAleatorio
+funcao menu
+
+/////5 funções usando a estrutura adotada
+1.inserir
+    Criar 10 aleatorios (11-500)
+2.print -> 1 + 2 = 3 + 4 = 7
+3.free/remover na lista toda (Para próximo jogador jogar)
+4.modoCrescente depois que poe a opcao 1
+    ordenar
+5.modoAleatorio depois que poe a funcao jogar
+
+7 + 5 = 12 + 2 = 14 - 10 = 4 * 3 = 12
+aleatorio->7 5 12 2 10 8 12 52 23 
+crescente->2 5 7 8 10 12 23 52
+
+////pra printar ()
+loop {
+    lista1oNumero
+    listaOperacoesFeitas
+    listaRespostas
+    =
+}

@@ -1,13 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include "screen.h"
-#include "keyboard.h"
-#include "timer.h"
+ 
 
 typedef struct Node{
-    char pergunta;
+    char *pergunta;
     int nivel;
     int resposta;
     struct Node *prox;
@@ -19,10 +16,11 @@ Node *dificuldade();
 Node *dificuldadeFacil();
 Node *dificuldadeMedio();
 Node *dificuldadeDificil();
-void inserir(char pergunta, int resposta,  Node **head);
+void inserir(char *pergunta, int resposta,  Node **head);
 
 int main() {
     int opcao;
+    
     do{
         printf("---------Timath--------\n");
         printf("1 - Iniciar Jogo\n");
@@ -52,7 +50,7 @@ void jogar(){
     Node *listaPerguntas = NULL;
 
     quantidadeJogadores();
-    listaPerguntas = dificuldade;
+    dificuldade();
 
 }
 
@@ -115,7 +113,7 @@ do{
     return perguntas;
 }
 
-void inserir(char pergunta,int resposta,  Node **head){
+void inserir(char *pergunta, int resposta,  Node **head){
     Node *novo = (Node*)malloc(sizeof(Node));
     if(*head == NULL){
         novo->pergunta = pergunta;
