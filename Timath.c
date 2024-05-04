@@ -5,6 +5,7 @@
 typedef struct Node{
     char pergunta;
     int nivel;
+    int resposta;
     struct Node *prox;
 }Node;
 
@@ -14,7 +15,7 @@ Node *dificuldade();
 Node *dificuldadeFacil();
 Node *dificuldadeMedio();
 Node *dificuldadeDificil();
-void inserir(char pergunta, Node **head);
+void inserir(char pergunta, int resposta,  Node **head);
 
 int main() {
     int opcao;
@@ -75,31 +76,31 @@ do{
     switch(dificuldade){
         case 1:
             printf("Dificuldade selecionada: Fácil\n");
-            inserir("Qual é a soma de 2 + 2?", perguntasFacil);
-            inserir("Qual é a subtração de 5 - 2?", perguntasFacil);
-            inserir("Qual é a soma de 3 + 3?", perguntasFacil);
-            inserir("Qual é a subtração de 10 - 5?", perguntasFacil);
-            inserir("Qual é a soma de 4 + 4?", perguntasFacil);
+            inserir("Qual é a soma de 2 + 2?",10 , perguntasFacil);
+            inserir("Qual é a subtração de 5 - 2?",10 , perguntasFacil);
+            inserir("Qual é a soma de 3 + 3?",10 , perguntasFacil);
+            inserir("Qual é a subtração de 10 - 5?",10 , perguntasFacil);
+            inserir("Qual é a soma de 4 + 4?",10 , perguntasFacil);
             perguntas = perguntasFacil;
             break;
 
         case 2:
             printf("Dificuldade selecionada: Médio\n");
-            inserir("Qual é a soma de 2 + 2?", perguntasMedio);
+            inserir("Qual é a soma de 2 + 2?",10 , perguntasMedio);
             inserir("Qual é a subtração de 5 - 2?", perguntasMedio);
-            inserir("Qual é a soma de 3 + 3?", perguntasMedio);
-            inserir("Qual é a subtração de 10 - 5?", perguntasMedio);
-            inserir("Qual é a soma de 4 + 4?", perguntasMedio);
+            inserir("Qual é a soma de 3 + 3?",10 , perguntasMedio);
+            inserir("Qual é a subtração de 10 - 5?",10 , perguntasMedio);
+            inserir("Qual é a soma de 4 + 4?",10 , perguntasMedio);
             perguntas = perguntasMedio;
             break;
 
         case 3:
             printf("Dificuldade selecionada: Difícil\n");
-            inserir("Qual é a soma de 2 + 2?", perguntasDificil);
-            inserir("Qual é a subtração de 5 - 2?", perguntasDificil);
-            inserir("Qual é a soma de 3 + 3?", perguntasDificil);
-            inserir("Qual é a subtração de 10 - 5?", perguntasDificil);
-            inserir("Qual é a soma de 4 + 4?", perguntasDificil);
+            inserir("Qual é a soma de 2 + 2?",10 , perguntasDificil);
+            inserir("Qual é a subtração de 5 - 2?",10 , perguntasDificil);
+            inserir("Qual é a soma de 3 + 3?",10 , perguntasDificil);
+            inserir("Qual é a subtração de 10 - 5?",10 , perguntasDificil);
+            inserir("Qual é a soma de 4 + 4?",10 , perguntasDificil);
             perguntas = perguntasDificil;
             break;
 
@@ -110,15 +111,17 @@ do{
     return perguntas;
 }
 
-void inserir(char pergunta, Node **head){
+void inserir(char pergunta,int resposta,  Node **head){
     Node *novo = (Node*)malloc(sizeof(Node));
     if(*head == NULL){
         novo->pergunta = pergunta;
+        novo->resposta = resposta;
         novo->prox = NULL;
         *head = novo;
     }
     else{
         novo->pergunta = pergunta;
+        novo->resposta = resposta;
         novo->prox = *head;
         *head = novo;
     }
