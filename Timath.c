@@ -87,7 +87,7 @@ do{
         case 2:
             printf("Dificuldade selecionada: Médio\n");
             inserir("Qual é a soma de 2 + 2?",10 , perguntasMedio);
-            inserir("Qual é a subtração de 5 - 2?", perguntasMedio);
+            inserir("Qual é a subtração de 5 - 2?",10 , perguntasMedio);
             inserir("Qual é a soma de 3 + 3?",10 , perguntasMedio);
             inserir("Qual é a subtração de 10 - 5?",10 , perguntasMedio);
             inserir("Qual é a soma de 4 + 4?",10 , perguntasMedio);
