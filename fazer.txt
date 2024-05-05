@@ -1,7 +1,7 @@
 Colocar cor da resposta em uma cor diferenete
 
 
-LISTA ENCADEADA OU PILHA
+LISTA ENCADEADA
 
 START
 escolher modo (aleatorio/crescente)
@@ -14,6 +14,7 @@ timer inicia
 Jogador só passa para a próxima pergunta quando acertar
 Ranking pelo tempo (menor -> maior)
 Tempo incremental
+Assim que o jogador termiona de responder as perguntas, seu nome e seu score (tempo) são adicionados no Ranking
 Ranking no txt (leaderbord pra sempre) SORT
 Ranking pelo tempo (menor -> maior)
 Divisão não pode para ser por 0
@@ -41,3 +42,4 @@ loop {
     listaRespostas
     =
 }
+
