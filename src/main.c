@@ -32,19 +32,39 @@ typedef struct Player
     struct Player *next;
 } Player;
 
-void tiMath();
+typedef struct node
+{
+    char operation;
+    int number;
+    struct node *next;
+} Node;
 
+
+void tiMath();
 void menu();
 void gameMenu();
-void add();
-
 void displayRanking();
-
 void ascendingGame();
 void randomGame();
 
+void random_numbers_list(Node **head, Node **tail);
+void add_node(Node **head, Node **tail, int number, char operation);
+void print_numbers(Node *head);
+void free_numbers(Node **head, Node **tail);
+//void sort_numbers(Node *head, );
+
+void initRandom();
+int getRandomNumber(int min, int max);
+char getOperation();
+
 int main()
 {
+    initRandom();
+
+    Node *head = NULL, *tail = NULL;
+    random_numbers_list(&head, &tail);
+    print_numbers(head);
+    free_numbers(&head, &tail);
     tiMath();
 
     while (1)
@@ -283,4 +303,76 @@ void randomGame()
     {
         printf("Não foi possível abrir o arquivo de pontuações.");
     }
+}
+
+void random_numbers_list(Node **head, Node **tail){
+    int number;
+    char operation;
+
+    for(int i = 0; i < GAME_SIZE; i++) {
+        number = getRandomNumber(RANGE_MIN, RANGE_MAX);
+        operation = getOperation();
+
+        add_node(head, tail, number, operation);
+    }
+}
+
+void add_node(Node **head, Node **tail, int number, char operation){
+    Node *new = (Node*)malloc(sizeof(Node));
+
+    if(new == NULL) return;
+
+    new->operation = operation;
+    new->number = number;
+    new->next = NULL;
+
+    if(*head == NULL){
+        *head = new;
+        *tail = new;
+    }
+    else{
+        (*tail)->next = new;
+        *tail = new;
+    }
+} 
+
+void print_numbers(Node *head){
+    Node *aux = head;
+    while(aux != NULL){
+        printf("%d %c\n", aux->number, aux->operation);
+        aux = aux->next;
+    }
+}
+
+void free_numbers(Node **head, Node **tail){
+    Node *aux;
+	if((*head) != NULL){
+		aux = *head;
+		*head = (*head)->next;
+		free(aux);
+	}
+	if((*head) == NULL){
+		*tail == NULL;
+	}
+}
+
+void initRandom() {
+    srand(time(NULL));
+}
+
+int getRandomNumber(int min, int max){
+    return rand() % (max - min + 1) + min;
+}
+
+char getOperation(){
+    int operation = getRandomNumber(1, 4);
+
+    switch (operation){
+        case 1 : return '+';
+        case 2 : return '-';
+        case 3 : return '*';
+        case 4 : return '/';
+    }
+
+    return '+';
 }
