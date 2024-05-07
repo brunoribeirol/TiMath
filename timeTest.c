@@ -22,7 +22,7 @@ int main() {
     gettimeofday(&end, NULL);  // End timing
 
     elapsed = (end.tv_sec - start.tv_sec) + (end.tv_usec - start.tv_usec) / 1000000.0;  // Calculate elapsed time
-    printf("You completed the questions in %.6f seconds.\n", elapsed);
+    printf("You completed the questions in %.3f seconds.\n", elapsed);
 
     return 0;
 }

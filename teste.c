@@ -89,4 +89,5 @@ int main() {
     time(&agora);
     printf("\ntempo: %d", (int)difftime(agora, inicio)); //int
     return 0;
+
 }

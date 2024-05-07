@@ -67,6 +67,10 @@ int main()
 
     Node *head = NULL;
     Node *tail = NULL;
+    
+    // int firstNumber =  getRandomNumber(1, 10);
+    // printf("%d\n", firstNumber);
+
     random_numbers_list(&head, &tail);
     print_numbers(head);
     free_numbers(&head, &tail);
@@ -209,6 +213,18 @@ void ascendingGame()
     fgets(playerName, NAME_SIZE, stdin);
     playerName[strcspn(playerName, "\n")] = 0;
 
+    Node *head = NULL;
+    Node *tail = NULL;
+
+    random_numbers_list(&head, &tail);
+
+    int firstNumber =  getRandomNumber(1, 10);
+
+    /*
+    CEXECUTAR ELE COM A OPERCAO E COK O PRIMEIRO NUMNERO DA LISTA
+    COMPAARR SE O PRIMEIRO NUMERO DA LISTA COMBINADO COM A OPERACAO E O NUMERO SEQUENTE CORRESPONDEM COM O RESULTADO
+    */
+
     FILE *file = fopen("ranking.txt", "a"); // Abe o arquivo para adicionar a pontuação
     if (file != NULL)
     {
@@ -244,9 +260,12 @@ void randomGame()
     playerName[strcspn(playerName, "\n")] = 0;
 
 
+    Node *head = NULL;
+    Node *tail = NULL;
 
+    random_numbers_list(&head, &tail);
 
-
+    int firstNumber =  getRandomNumber(1, 10);
 
     
 
@@ -311,18 +330,14 @@ void displayRanking()
     " #### ##  ##  ##   ##   ##  ###  ##   ####    ##   ##    #####\n" reset);
 }
 
-
-
-
-
 void random_numbers_list(Node **head, Node **tail){
     int number;
     char operation;
 
     for(int i = 0; i < GAME_SIZE; i++) {
-        number = getRandomNumber(RANGE_MIN, RANGE_MAX);
         operation = getOperation();
-
+        number = getRandomNumber(RANGE_MIN, RANGE_MAX);
+       
         add_node(head, tail, number, operation);
     }
 }
@@ -349,7 +364,7 @@ void add_node(Node **head, Node **tail, int number, char operation){
 void print_numbers(Node *head){
     Node *aux = head;
     while(aux != NULL){
-        printf("%d %c\n", aux->number, aux->operation);
+        printf("%c %d\n", aux->operation, aux->number);
         aux = aux->next;
     }
 }
@@ -386,3 +401,4 @@ char getOperation(){
 
     return '+';
 }
+
