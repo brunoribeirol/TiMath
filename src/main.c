@@ -37,16 +37,23 @@ typedef struct Node
 {
     char operation;
     int number;
-    struct node *next;
+    struct Node *next;
 } Node;
+
+typedef struct Equation{
+    char operation;
+    int result;
+    int number;
+    struct Equation *next;
+} Equation;
 
 
 void tiMath();
 void menu();
 void gameMenu();
 
-void ascendingGame();
-void randomGame();
+void game();
+void displayAscendingGame();
 void displayRanking();
 
 void random_numbers_list(Node **head, Node **tail);
@@ -65,15 +72,15 @@ int main()
 
     initRandom();
 
-    Node *head = NULL;
-    Node *tail = NULL;
+    //Node *head = NULL;
+    //Node *tail = NULL;
     
-    // int firstNumber =  getRandomNumber(1, 10);
-    // printf("%d\n", firstNumber);
+    //int firstNumber =  getRandomNumber(1, 10);
+    //printf("%d\n", firstNumber);
 
-    random_numbers_list(&head, &tail);
-    print_numbers(head);
-    free_numbers(&head, &tail);
+    //random_numbers_list(&head, &tail);
+    //print_numbers(head);
+    //free_numbers(&head, &tail);
    
 
     while (1)
@@ -104,18 +111,17 @@ int main()
             if (scanf("%d", &gameChoice) != 1)
             {
                 printf(RED_BG "Entrada inválida. Por favor, insira um número válido." reset);
-                while (getchar() != '\n')
-                    ;
+                while (getchar() != '\n');
                 continue;
             }
 
             switch (gameChoice)
             {
             case 1:
-                ascendingGame();
+                game();
                 break;
-            case 2:
-                randomGame();
+            case 2: 
+            //Ajeitar para o caso de Modo aleattório?
                 break;
             case 3:
                 printf(RED_BG "Você encerrou o programa.\n" reset);
@@ -192,24 +198,12 @@ void gameMenu()
 }
 
 // FALTA
-void ascendingGame()
-{
-    printf(BMAG
-
-    "##   ##   #####   #####     #####              ####   ######   #######   #####     ####   #######  ##   ##  ######   #######\n"
-    "### ###  ##   ##   ## ##   ##   ##            ##  ##   ##  ##   ##   #  ##   ##   ##  ##   ##   #  ###  ##  # ## #    ##   #\n"
-    "#######  ##   ##   ##  ##  ##   ##           ##        ##  ##   ## #    #        ##        ## #    #### ##    ##      ## #\n"
-    "#######  ##   ##   ##  ##  ##   ##           ##        #####    ####     #####   ##        ####    ## ####    ##      ####\n"
-    "## # ##  ##   ##   ##  ##  ##   ##           ##        ## ##    ## #         ##  ##        ## #    ##  ###    ##      ## #\n"
-    "##   ##  ##   ##   ## ##   ##   ##            ##  ##   ##  ##   ##   #  ##   ##   ##  ##   ##   #  ##   ##    ##      ##   #\n"
-    "##   ##   #####   #####     #####              ####   #### ##  #######   #####     ####   #######  ##   ##   ####    #######\n" reset);
-
-    sleep(0.5);
+void game(){
+    displayAscendingGame();
 
     char playerName[NAME_SIZE];
     printf("Digite seu nome: ");
-    while ((getchar()) != '\n')
-        ;
+    while ((getchar()) != '\n');
     fgets(playerName, NAME_SIZE, stdin);
     playerName[strcspn(playerName, "\n")] = 0;
 
@@ -217,6 +211,7 @@ void ascendingGame()
     Node *tail = NULL;
 
     random_numbers_list(&head, &tail);
+    print_numbers(head);
 
     int firstNumber =  getRandomNumber(1, 10);
 
@@ -235,50 +230,22 @@ void ascendingGame()
     {
         printf("Não foi possível abrir o arquivo de pontuações.");
     }
+
+    free_numbers(&head, &tail);
 }
 
-// FALTA
-void randomGame()
-{
+void displayAscendingGame(){
     printf(BMAG
 
-    "##   ##   #####   #####     #####              ##     ####     #######    ##     ######    #####   ######    ####     #####\n"
-    "### ###  ##   ##   ## ##   ##   ##            ####     ##       ##   #   ####    # ## #   ##   ##   ##  ##    ##     ##   ##\n"
-    "#######  ##   ##   ##  ##  ##   ##           ##  ##    ##       ## #    ##  ##     ##     ##   ##   ##  ##    ##     ##   ##\n"
-    "#######  ##   ##   ##  ##  ##   ##           ##  ##    ##       ####    ##  ##     ##     ##   ##   #####     ##     ##   ##\n"
-    "## # ##  ##   ##   ##  ##  ##   ##           ######    ##   #   ## #    ######     ##     ##   ##   ## ##     ##     ##   ##\n"
-    "##   ##  ##   ##   ## ##   ##   ##           ##  ##    ##  ##   ##   #  ##  ##     ##     ##   ##   ##  ##    ##     ##   ##\n"
-    "##   ##   #####   #####     #####            ##  ##   #######  #######  ##  ##    ####     #####   #### ##   ####     #####\n" reset);
+    "##   ##   #####   #####     #####              ####   ######   #######   #####     ####   #######  ##   ##  ######   #######\n"
+    "### ###  ##   ##   ## ##   ##   ##            ##  ##   ##  ##   ##   #  ##   ##   ##  ##   ##   #  ###  ##  # ## #    ##   #\n"
+    "#######  ##   ##   ##  ##  ##   ##           ##        ##  ##   ## #    #        ##        ## #    #### ##    ##      ## #\n"
+    "#######  ##   ##   ##  ##  ##   ##           ##        #####    ####     #####   ##        ####    ## ####    ##      ####\n"
+    "## # ##  ##   ##   ##  ##  ##   ##           ##        ## ##    ## #         ##  ##        ## #    ##  ###    ##      ## #\n"
+    "##   ##  ##   ##   ## ##   ##   ##            ##  ##   ##  ##   ##   #  ##   ##   ##  ##   ##   #  ##   ##    ##      ##   #\n"
+    "##   ##   #####   #####     #####              ####   #### ##  #######   #####     ####   #######  ##   ##   ####    #######\n" reset);
 
     sleep(0.5);
-
-    char playerName[NAME_SIZE];
-    printf("Digite seu nome: ");
-    while ((getchar()) != '\n')
-        ;
-    fgets(playerName, NAME_SIZE, stdin);
-    playerName[strcspn(playerName, "\n")] = 0;
-
-
-    Node *head = NULL;
-    Node *tail = NULL;
-
-    random_numbers_list(&head, &tail);
-
-    int firstNumber =  getRandomNumber(1, 10);
-
-    
-
-    FILE *file = fopen("ranking.txt", "a"); // Abe o arquivo para adicionar a pontuação
-    if (file != NULL)
-    {
-        // fprintf(file, "%s: %d\n", playerName, time);
-        fclose(file);
-    }
-    else
-    {
-        printf("Não foi possível abrir o arquivo de pontuações.");
-    }
 }
 
 // FALTA
