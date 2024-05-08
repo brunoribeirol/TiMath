@@ -19,8 +19,8 @@
 #define reset "\e[0m"
 
 #define GAME_SIZE 10
-#define RANGE_MIN 11
-#define RANGE_MAX 150
+#define RANGE_MIN 1
+#define RANGE_MAX 10
 
 #define NAME_SIZE 50
 #define MAX_PLAYERS 1000 //Ver depois
@@ -216,7 +216,7 @@ void game(){
 
     random_numbers_list(&head, &tail);
 
-    int firstNumber =  getRandomNumber(RANGE_MIN, 50);
+    int firstNumber =  getRandomNumber(RANGE_MIN, RANGE_MAX);
     int result = firstNumber, aux_number;
     int user_answer;
     
@@ -224,11 +224,13 @@ void game(){
         system("clear");
         add_in_equation(&head_eq, &tail_eq, aux->number, aux->operation, result);
 
-        switch (aux->operation){
-            case '+': aux_number = result + aux->number;
-            case '-': aux_number = result - aux->number;
-            case '*': aux_number = result * aux->number;
-            case '/': aux_number = result / aux->number;
+        char operation = aux->operation;
+
+        switch (operation){
+            case '+': aux_number = result + aux->number; break;
+            case '-': aux_number = result - aux->number; break;
+            case '*': aux_number = result * aux->number; break;
+            case '/': aux_number = result / aux->number; break;
 
 
             //Só está funcionando com aux_number = result + aux->number
@@ -247,7 +249,8 @@ void game(){
             //Divisão de segundon numeior maiorn que o 1 -> 2 / 5
 
         }
-    
+       // printf("%d = %d %c %d\n", aux_number, result, operation, aux->number);
+        printf("oi\n");
         print_equation(head_eq);
 
         scanf("%d", &user_answer);

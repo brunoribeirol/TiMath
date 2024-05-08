@@ -52,3 +52,10 @@ Respostas com cores diferentes
 
 
 
+
+FALTA FAZER (erros):
+
+- Segmentation fault após responder a última equação
+- Tratamento de erros para caso da divisão e subtração (não aceitar números negativos e divisões)
+- Unificar as listas (reaproveitar a Struct Equation)
+...
