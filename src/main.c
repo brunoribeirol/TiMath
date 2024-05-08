@@ -20,16 +20,16 @@
 
 #define GAME_SIZE 10
 #define RANGE_MIN 11
-#define RANGE_MAX 500
+#define RANGE_MAX 150
 
-#define NAME_SIZE 20
-#define MAX_PLAYERS 1000
+#define NAME_SIZE 50
+#define MAX_PLAYERS 1000 //Ver depois
 
 typedef struct Player
 {
     char name[NAME_SIZE];
     int time;
-    int n;
+    int n; // precisa??
     struct Player *next;
 } Player;
 
@@ -58,9 +58,11 @@ void displayRanking();
 
 void random_numbers_list(Node **head, Node **tail);
 void add_node(Node **head, Node **tail, int number, char operation);
-void print_numbers(Node *head);
+void print_equation(Equation *head);
 void free_numbers(Node **head, Node **tail);
+void free_equations(Equation **head, Equation **tail);
 //void sort_numbers(Node *head, );
+void add_in_equation(Equation **head, Equation **tail, int number, char operation, int result);
 
 void initRandom();
 int getRandomNumber(int min, int max);
@@ -79,7 +81,7 @@ int main()
     //printf("%d\n", firstNumber);
 
     //random_numbers_list(&head, &tail);
-    //print_numbers(head);
+    //print_equation(head);
     //free_numbers(&head, &tail);
    
 
@@ -145,8 +147,7 @@ int main()
 }
 
 // FALTA AJEITAR
-void tiMath()
-{
+void tiMath(){
     printf(BMAG
 
     "######   #######  ##   ##           ##   ##   ####    ##   ##  #####     #####\n"
@@ -181,16 +182,14 @@ void tiMath()
     sleep(0.5);
 }
 
-void menu()
-{
+void menu(){
     printf(BOLD_YEL "\n----- MENU PRINCIPAL -----\n" reset);
     printf(BLU "1. Jogar TiMath\n" reset);
     printf(GRN "2. Visualizar Ranking\n" reset);
     printf(CYN "3. Sair\n" reset);
 }
 
-void gameMenu()
-{
+void gameMenu(){
     printf(BOLD_YEL "\n----- QUAL MODO VOCÊ DESEJA JOGAR? -----\n" reset);
     printf(GRN "1. Modo Crescente\n" reset);
     printf(GRN "2. Modo Aleatório\n" reset);
@@ -206,32 +205,65 @@ void game(){
     while ((getchar()) != '\n');
     fgets(playerName, NAME_SIZE, stdin);
     playerName[strcspn(playerName, "\n")] = 0;
+    
+
 
     Node *head = NULL;
     Node *tail = NULL;
 
+    Equation *head_eq = NULL;
+    Equation *tail_eq = NULL;
+
     random_numbers_list(&head, &tail);
-    print_numbers(head);
 
-    int firstNumber =  getRandomNumber(1, 10);
+    int firstNumber =  getRandomNumber(RANGE_MIN, 50);
+    int result = firstNumber, aux_number;
+    int user_answer;
+    
+    for(Node *aux = head; aux != NULL; aux = aux->next){
+        system("clear");
+        add_in_equation(&head_eq, &tail_eq, aux->number, aux->operation, result);
 
-    /*
-    CEXECUTAR ELE COM A OPERCAO E COK O PRIMEIRO NUMNERO DA LISTA
-    COMPAARR SE O PRIMEIRO NUMERO DA LISTA COMBINADO COM A OPERACAO E O NUMERO SEQUENTE CORRESPONDEM COM O RESULTADO
-    */
+        switch (aux->operation){
+            case '+': aux_number = result + aux->number;
+            case '-': aux_number = result - aux->number;
+            case '*': aux_number = result * aux->number;
+            case '/': aux_number = result / aux->number;
 
-    FILE *file = fopen("ranking.txt", "a"); // Abe o arquivo para adicionar a pontuação
-    if (file != NULL)
-    {
-        // fprintf(file, "%s: %d\n", playerName, time);
-        fclose(file);
+
+            //Só está funcionando com aux_number = result + aux->number
+            
+            // if (result >= aux->number)
+            // {
+            //     aux_number = result / aux->number;
+            // }
+           
+            
+
+
+            
+            
+
+            //Divisão de segundon numeior maiorn que o 1 -> 2 / 5
+
+        }
+    
+        print_equation(head_eq);
+
+        scanf("%d", &user_answer);
+
+        while (user_answer != aux_number) {
+            system("clear");
+
+            print_equation(head_eq);
+            scanf("%d", &user_answer);
+        }
+        
+        result = aux_number;
     }
-    else
-    {
-        printf("Não foi possível abrir o arquivo de pontuações.");
-    }
-
+   
     free_numbers(&head, &tail);
+    free_equations(&head_eq, &tail_eq);
 }
 
 void displayAscendingGame(){
@@ -249,8 +281,7 @@ void displayAscendingGame(){
 }
 
 // FALTA
-void displayRanking()
-{
+void displayRanking(){
     FILE *file = fopen("ranking.txt", "r");
     if (file == NULL)
     {
@@ -301,51 +332,69 @@ void random_numbers_list(Node **head, Node **tail){
     int number;
     char operation;
 
-    for(int i = 0; i < GAME_SIZE; i++) {
+    for(int i = 0; i < GAME_SIZE;) {
         operation = getOperation();
+        if(i == 0 && operation == '/') continue;
+
         number = getRandomNumber(RANGE_MIN, RANGE_MAX);
        
         add_node(head, tail, number, operation);
+        i++;
     }
 }
 
 void add_node(Node **head, Node **tail, int number, char operation){
-    Node *new = (Node*)malloc(sizeof(Node));
+    Node *newNode = (Node*)malloc(sizeof(Node));
 
-    if(new == NULL) return;
+    if(newNode == NULL) return;
 
-    new->operation = operation;
-    new->number = number;
-    new->next = NULL;
+    newNode->operation = operation;
+    newNode->number = number;
+    newNode->next = NULL;
 
     if(*head == NULL){
-        *head = new;
-        *tail = new;
+        *head = newNode;
+        *tail = newNode;
     }
     else{
-        (*tail)->next = new;
-        *tail = new;
+        (*tail)->next = newNode;
+        *tail = newNode;
     }
 } 
 
-void print_numbers(Node *head){
-    Node *aux = head;
+void print_equation(Equation *head){
+    Equation *aux = head;
     while(aux != NULL){
-        printf("%c %d\n", aux->operation, aux->number);
+        printf("%d %c %d = ", aux->result, aux->operation, aux->number);
         aux = aux->next;
+
+        //Colocar esse resultado com uma cor diferente 
+
     }
 }
 
 void free_numbers(Node **head, Node **tail){
-    Node *aux;
-	if((*head) != NULL){
-		aux = *head;
-		*head = (*head)->next;
-		free(aux);
-	}
-	if((*head) == NULL){
-		*tail == NULL;
-	}
+    Node* aux;
+ 
+    while (head != NULL) {
+        aux = *head;
+        *head = (*head)->next;
+        free(aux);
+    }
+
+    *tail = NULL;
+}
+
+void free_equations(Equation **head, Equation **tail){
+    Equation* aux;
+ 
+    while (head != NULL) {
+        aux = *head;
+        *head = (*head)->next;
+        free(aux);
+    }
+
+    *tail = NULL;
 }
 
 void initRandom() {
@@ -369,3 +418,48 @@ char getOperation(){
     return '+';
 }
 
+void add_in_equation(Equation **head, Equation **tail, int number, char operation, int result){
+    Equation *new_equation = (Equation*)malloc(sizeof(Equation));
+
+    if(new_equation == NULL) return;
+
+    new_equation->operation = operation;
+    new_equation->number = number;
+    new_equation->result = result;
+    new_equation->next = NULL;
+
+    if(*head == NULL){
+        *head = new_equation;
+        *tail = new_equation;
+    }
+    else{
+        (*tail)->next = new_equation;
+        *tail = new_equation;
+    }
+}
+
+/*
+////pra printar ()
+loop {
+    lista1oNumero
+    listaOperacoesFeitas
+    listaRespostas
+    =
+}
+*/
+
+
+/*
+FUNCAO PARA ADICIONAR NO ARQUIVO
+
+ FILE *file = fopen("ranking.txt", "a"); // Abe o arquivo para adicionar a pontuação
+    if (file != NULL)
+    {
+        // fprintf(file, "%s: %d\n", playerName, time);
+        fclose(file);
+    }
+    else
+    {
+        printf("Não foi possível abrir o arquivo de pontuações.");
+    }
+*/

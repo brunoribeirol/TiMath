@@ -43,3 +43,12 @@ loop {
     =
 }
 
+
+
+Ordenação na funcao de ordenar
+Ordenar para o txt
+Ver número máximo de jogadores
+Respostas com cores diferentes
+
+
+
