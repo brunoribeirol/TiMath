@@ -70,6 +70,7 @@ char getOperation();
 
 int main()
 {
+    system("clear");
     tiMath();
 
     initRandom();
@@ -379,7 +380,7 @@ void print_equation(Equation *head){
 void free_numbers(Node **head, Node **tail){
     Node* aux;
  
-    while (head != NULL) {
+    while (*head != NULL) {
         aux = *head;
         *head = (*head)->next;
         free(aux);
@@ -391,7 +392,7 @@ void free_numbers(Node **head, Node **tail){
 void free_equations(Equation **head, Equation **tail){
     Equation* aux;
  
-    while (head != NULL) {
+    while (*head != NULL) {
         aux = *head;
         *head = (*head)->next;
         free(aux);
