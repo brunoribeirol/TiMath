@@ -3,6 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <time.h>
+#include <stdbool.h>
 
 // #include "screen.h"
 // #include "keyboard.h"
@@ -61,7 +62,7 @@ void add_node(Node **head, Node **tail, int number, char operation);
 void print_equation(Equation *head);
 void free_numbers(Node **head, Node **tail);
 void free_equations(Equation **head, Equation **tail);
-//void sort_numbers(Node *head, );
+void bubble_sort(Node **head, Node **tail);
 void add_in_equation(Equation **head, Equation **tail, int number, char operation, int result);
 
 void initRandom();
@@ -216,6 +217,7 @@ void game(){
     Equation *tail_eq = NULL;
 
     random_numbers_list(&head, &tail);
+    bubble_sort(&head, &tail);
 
     int firstNumber =  getRandomNumber(RANGE_MIN, RANGE_MAX);
     int result = firstNumber, aux_number;
@@ -229,9 +231,9 @@ void game(){
 
         switch (operation){
             case '+': aux_number = result + aux->number; break;
-            case '-': aux_number = result - aux->number; break;
+            case '-': aux_number = result - aux->number; break; //Tratar o erro para o número não dar negativo
             case '*': aux_number = result * aux->number; break;
-            case '/': aux_number = result / aux->number; break;
+            case '/': aux_number = result / aux->number; break; //Tratar o erro para o número ser divisível
 
 
             //Só está funcionando com aux_number = result + aux->number
@@ -251,7 +253,6 @@ void game(){
 
         }
        // printf("%d = %d %c %d\n", aux_number, result, operation, aux->number);
-        printf("oi\n");
         print_equation(head_eq);
 
         scanf("%d", &user_answer);
@@ -441,6 +442,31 @@ void add_in_equation(Equation **head, Equation **tail, int number, char operatio
         *tail = new_equation;
     }
 }
+
+void bubble_sort(Node **head, Node **tail){
+    bool is_sorted = false;
+    for(Node *aux = *head; aux != NULL && is_sorted == false; aux = aux->next){
+        is_sorted = true;
+        for(Node *temp = *head; temp->next != NULL; temp = temp->next){
+            if(temp->number > temp->next->number){
+                swap(temp, temp->next);
+                is_sorted = false;
+            }
+        }
+    }
+}
+
+void swap(Node *a, Node *b){
+    int aux_number = a->number;
+    int aux_char = a->operation;
+
+    a->number = b->number;
+    a->operation = b->operation;
+
+    b->number = aux_number;
+    b->operation = aux_char;
+}
+
 
 /*
 ////pra printar ()
