@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <stdbool.h>
+#include <sys/time.h>
 
 // #include "screen.h"
 // #include "keyboard.h"
@@ -30,7 +31,6 @@ typedef struct Player
 {
     char name[NAME_SIZE];
     int time;
-    int n; // precisa??
     struct Player *next;
 } Player;
 
@@ -63,11 +63,14 @@ void print_equation(Equation *head);
 void free_numbers(Node **head, Node **tail);
 void free_equations(Equation **head, Equation **tail);
 void bubble_sort(Node **head, Node **tail);
+void swap(Node *a, Node *b);
 void add_in_equation(Equation **head, Equation **tail, int number, char operation, int result);
 
 void initRandom();
 int getRandomNumber(int min, int max);
 char getOperation();
+
+void addFile(const char *fileName, const char *playerName, int elapsed);
 
 int main()
 {
@@ -222,6 +225,10 @@ void game(){
     int firstNumber =  getRandomNumber(RANGE_MIN, RANGE_MAX);
     int result = firstNumber, aux_number;
     int user_answer;
+
+    struct timeval start, end;
+    double elapsed;
+    gettimeofday(&start, NULL);
     
     for(Node *aux = head; aux != NULL; aux = aux->next){
         system("clear");
@@ -256,7 +263,6 @@ void game(){
         print_equation(head_eq);
 
         scanf("%d", &user_answer);
-
         while (user_answer != aux_number) {
             system("clear");
 
@@ -266,6 +272,14 @@ void game(){
         
         result = aux_number;
     }
+
+    gettimeofday(&end, NULL);  // End timing
+
+    elapsed = (end.tv_sec - start.tv_sec) + (end.tv_usec - start.tv_usec) / 1000000.0;
+    printf("You completed the questions in %.3f seconds.\n", elapsed);
+
+
+    addFile("ranking.txt", playerName, elapsed);
    
     free_numbers(&head, &tail);
     free_equations(&head_eq, &tail_eq);
@@ -468,28 +482,38 @@ void swap(Node *a, Node *b){
 }
 
 
-/*
-////pra printar ()
-loop {
-    lista1oNumero
-    listaOperacoesFeitas
-    listaRespostas
-    =
-}
-*/
+void addFile(const char *fileName, const char *playerName, int elapsed)
+{
 
-
-/*
-FUNCAO PARA ADICIONAR NO ARQUIVO
-
- FILE *file = fopen("ranking.txt", "a"); // Abe o arquivo para adicionar a pontuação
+    FILE *file = fopen(fileName, "a"); // Abe o arquivo para adicionar a pontuação
     if (file != NULL)
     {
-        // fprintf(file, "%s: %d\n", playerName, time);
+        fprintf(file, "%s: %d\n", playerName, elapsed);
         fclose(file);
     }
     else
     {
         printf("Não foi possível abrir o arquivo de pontuações.");
     }
-*/
+
+}
+
+
+// void addFile(FILE)
+// {
+//     Player *newPlayer = (Player*)malloc(sizeof(Player));
+
+
+//     FILE *file = fopen("ranking.txt", "a"); // Abe o arquivo para adicionar a pontuação
+//     if (file != NULL)
+//     {
+//         fprintf(file, "%s: %d\n", newPlayer->name, newPlayer->time);
+//         fclose(file);
+//     }
+//     else
+//     {
+//         printf("Não foi possível abrir o arquivo de pontuações.");
+//     }
+
+// }
+
