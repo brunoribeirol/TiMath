@@ -58,7 +58,7 @@ void game();
 void displayAscendingGame();
 void displayRanking();
 
-void random_numbers_list(Node **head, Node **tail);
+void random_numbers_list(Node **head, Node **tail, int first_number);
 void add_node(Node **head, Node **tail, int number, char operation);
 void free_numbers(Node **head, Node **tail);
 
@@ -218,13 +218,13 @@ void game(){
     Equation *head_eq = NULL;
     Equation *tail_eq = NULL;
 
-    random_numbers_list(&head, &tail);
-    bubble_sort(&head, &tail);
-
     int firstNumber =  getRandomNumber(RANGE_MIN, RANGE_MAX);
     int result = firstNumber;
     int aux_number;
     int user_answer;
+
+    random_numbers_list(&head, &tail, firstNumber);
+    //bubble_sort(&head, &tail);
 
     struct timeval start;
     struct timeval end;
@@ -356,23 +356,38 @@ void displayRanking(){
     " #### ##  ##  ##   ##   ##  ###  ##   ####    ##   ##    #####\n" reset);
 }
 
-void random_numbers_list(Node **head, Node **tail){
+void random_numbers_list(Node **head, Node **tail, int first_number){
     int number;
+    int result = first_number;
     char operation;
 
-    //REVER
-    for(int i = 0; i < GAME_SIZE;) {
+    for(int i = 0; i < GAME_SIZE; i++) {
         operation = getOperation();
-        while(i == 0 && operation == '/')
-        {
-            operation = getOperation();
-        }
         number = getRandomNumber(RANGE_MIN, RANGE_MAX);
-       
+
+        if(operation == '/'){
+            while(result % number != 0){
+                number = getRandomNumber(RANGE_MIN, RANGE_MAX);
+            }
+        }
+
+        if(operation == '-'){
+            while (result - number < 1){
+                number = getRandomNumber(RANGE_MIN, RANGE_MAX);
+            }     
+        }
+
+        switch (operation) {
+            case '+': result = result + number; break;
+            case '-': result = result - number; break;
+            case '*': result = result * number; break;
+            case '/': result = result / number; break;
+        }
+        
         add_node(head, tail, number, operation);
-        i++;
     }
 }
+
 
 
 void add_node(Node **head, Node **tail, int number, char operation){
