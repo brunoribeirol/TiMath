@@ -21,6 +21,7 @@
 #define reset "\e[0m"
 
 #define GAME_SIZE 10
+//Ajietar range
 #define RANGE_MIN 1
 #define RANGE_MAX 10
 
@@ -30,8 +31,8 @@
 typedef struct Player
 {
     char name[NAME_SIZE];
-    int time;
-    struct Player *next;
+    float time;
+    struct Player *next; //precisa???
 } Player;
 
 typedef struct Node
@@ -59,18 +60,21 @@ void displayRanking();
 
 void random_numbers_list(Node **head, Node **tail);
 void add_node(Node **head, Node **tail, int number, char operation);
-void print_equation(Equation *head);
 void free_numbers(Node **head, Node **tail);
-void free_equations(Equation **head, Equation **tail);
+
+void add_in_equation(Equation **head, Equation **tail, int number, char operation, int result);
 void bubble_sort(Node **head, Node **tail);
 void swap(Node *a, Node *b);
-void add_in_equation(Equation **head, Equation **tail, int number, char operation, int result);
+void print_equation(Equation *head, int turn);
+void free_equations(Equation **head, Equation **tail);
+
+
 
 void initRandom();
 int getRandomNumber(int min, int max);
 char getOperation();
 
-void addFile(const char *fileName, const char *playerName, int elapsed);
+void addFile(const char *fileName, const char *playerName, float elapsed);
 
 int main()
 {
@@ -107,44 +111,40 @@ int main()
 
         int gameChoice;
 
-        switch (choice)
-        {
-        case 1:
-
-            gameMenu();
-
-            printf(reset "Escolha a opção que deseja realizar: " reset);
-
-            if (scanf("%d", &gameChoice) != 1)
-            {
-                printf(RED_BG "Entrada inválida. Por favor, insira um número válido." reset);
-                while (getchar() != '\n');
-                continue;
-            }
-
-            switch (gameChoice)
-            {
+        switch (choice) {
             case 1:
-                game();
+                gameMenu();
+                printf(reset "Escolha a opção que deseja realizar: " reset);
+
+                if (scanf("%d", &gameChoice) != 1) {
+                    printf(RED_BG "Entrada inválida. Por favor, insira um número válido." reset);
+                    while (getchar() != '\n');
+                    continue;
+                }
+
+                switch (gameChoice) {
+                    case 1:
+                        game();
+                        break;
+                    case 2: 
+                    //Ajeitar para o caso de Modo aleattório?
+                        break;
+                    case 3:
+                        printf(RED_BG "Você encerrou o programa.\n" reset);
+                        return 0;
+                    default:
+                        printf(RED_BG "Opção inválida, por favor insira um número válido!" reset);
+                }
+
                 break;
-            case 2: 
-            //Ajeitar para o caso de Modo aleattório?
+            case 2:
+                displayRanking();
                 break;
             case 3:
                 printf(RED_BG "Você encerrou o programa.\n" reset);
                 return 0;
             default:
                 printf(RED_BG "Opção inválida, por favor insira um número válido!" reset);
-            }
-            break;
-        case 2:
-            displayRanking();
-            break;
-        case 3:
-            printf(RED_BG "Você encerrou o programa.\n" reset);
-            return 0;
-        default:
-            printf(RED_BG "Opção inválida, por favor insira um número válido!" reset);
         }
     }
 
@@ -205,13 +205,12 @@ void gameMenu(){
 void game(){
     displayAscendingGame();
 
-    char playerName[NAME_SIZE];
+    Player *newPlayer = (Player*)malloc(sizeof(Player));
+
     printf("Digite seu nome: ");
     while ((getchar()) != '\n');
-    fgets(playerName, NAME_SIZE, stdin);
-    playerName[strcspn(playerName, "\n")] = 0;
-    
-
+    fgets(newPlayer->name, NAME_SIZE, stdin);
+    newPlayer->name[strcspn(newPlayer->name, "\n")] = 0;
 
     Node *head = NULL;
     Node *tail = NULL;
@@ -223,25 +222,34 @@ void game(){
     bubble_sort(&head, &tail);
 
     int firstNumber =  getRandomNumber(RANGE_MIN, RANGE_MAX);
-    int result = firstNumber, aux_number;
+    int result = firstNumber;
+    int aux_number;
     int user_answer;
 
-    struct timeval start, end;
-    double elapsed;
+    struct timeval start;
+    struct timeval end;
     gettimeofday(&start, NULL);
     
-    for(Node *aux = head; aux != NULL; aux = aux->next){
+    for(Node *aux = head; aux != NULL; aux = aux->next) {
+        int turn=0;
         system("clear");
         add_in_equation(&head_eq, &tail_eq, aux->number, aux->operation, result);
 
         char operation = aux->operation;
 
-        switch (operation){
-            case '+': aux_number = result + aux->number; break;
-            case '-': aux_number = result - aux->number; break; //Tratar o erro para o número não dar negativo
-            case '*': aux_number = result * aux->number; break;
-            case '/': aux_number = result / aux->number; break; //Tratar o erro para o número ser divisível
-
+        switch (operation) {
+            case '+':
+                aux_number = result + aux->number;
+                break;
+            case '-':
+                aux_number = result - aux->number;
+                break; //Tratar o erro para o número não dar negativo
+            case '*':
+                aux_number = result * aux->number;
+                break;
+            case '/':
+                aux_number = result / aux->number;
+                break; //Tratar o erro para o número ser divisível
 
             //Só está funcionando com aux_number = result + aux->number
             
@@ -249,40 +257,41 @@ void game(){
             // {
             //     aux_number = result / aux->number;
             // }
-           
-            
 
-
-            
-            
-
-            //Divisão de segundon numeior maiorn que o 1 -> 2 / 5
+            /*
+            Número negativo nao
+                Negativo nao pode dividir
+            Divisao quebrada nao
+            Não pode ter multiplicação por 0
+            Segundo número não pode ser maior do que o 1
+            */
 
         }
        // printf("%d = %d %c %d\n", aux_number, result, operation, aux->number);
-        print_equation(head_eq);
+        print_equation(head_eq, turn);
 
         scanf("%d", &user_answer);
         while (user_answer != aux_number) {
             system("clear");
 
-            print_equation(head_eq);
+            print_equation(head_eq, turn);
             scanf("%d", &user_answer);
         }
-        
+        turn++;
         result = aux_number;
     }
 
+
     gettimeofday(&end, NULL);  // End timing
 
-    elapsed = (end.tv_sec - start.tv_sec) + (end.tv_usec - start.tv_usec) / 1000000.0;
-    printf("You completed the questions in %.3f seconds.\n", elapsed);
+    newPlayer->time = (end.tv_sec - start.tv_sec) + (end.tv_usec - start.tv_usec) / 1000000.0;
+    printf("You completed the questions in %.3f seconds.\n", newPlayer->time);
 
-
-    addFile("ranking.txt", playerName, elapsed);
+    addFile("ranking.txt", newPlayer->name, newPlayer->time);
    
     free_numbers(&head, &tail);
     free_equations(&head_eq, &tail_eq);
+    // free(newPlayer);
 }
 
 void displayAscendingGame(){
@@ -313,7 +322,7 @@ void displayRanking(){
     while (1)
     {
         Player *newNode = (Player *)malloc(sizeof(Player));
-        if (fscanf(file, "%s %d", newNode->name, &newNode->time) != 2)
+        if (fscanf(file, "%s %f", newNode->name, &newNode->time) != 2)
         {
             free(newNode);
             break;
@@ -323,18 +332,18 @@ void displayRanking(){
         head = newNode;
     }
 
-    // Número de linhas do arquivo
-    int lines = 0;
+    // // Número de linhas do arquivo
+    // int lines = 0;
 
-    while (fgets, sizeof(MAX_PLAYERS), file)
-    {
-        lines++;
-    }
+    // while (fgets, sizeof(MAX_PLAYERS), file)
+    // {
+    //     lines++;
+    // }
 
-    fclose(file);
+    // fclose(file);
 
-    // Ordenar a lista por score
-    Player *orderedList = NULL;
+    // // Ordenar a lista por score
+    // Player *orderedList = NULL;
 
     printf(BMAG
 
@@ -351,16 +360,20 @@ void random_numbers_list(Node **head, Node **tail){
     int number;
     char operation;
 
+    //REVER
     for(int i = 0; i < GAME_SIZE;) {
         operation = getOperation();
-        if(i == 0 && operation == '/') continue;
-
+        while(i == 0 && operation == '/')
+        {
+            operation = getOperation();
+        }
         number = getRandomNumber(RANGE_MIN, RANGE_MAX);
        
         add_node(head, tail, number, operation);
         i++;
     }
 }
+
 
 void add_node(Node **head, Node **tail, int number, char operation){
     Node *newNode = (Node*)malloc(sizeof(Node));
@@ -381,14 +394,11 @@ void add_node(Node **head, Node **tail, int number, char operation){
     }
 } 
 
-void print_equation(Equation *head){
+void print_equation(Equation *head, int turn){
     Equation *aux = head;
     while(aux != NULL){
         printf("%d %c %d = ", aux->result, aux->operation, aux->number);
         aux = aux->next;
-
-        //Colocar esse resultado com uma cor diferente 
-
     }
 }
 
@@ -481,14 +491,12 @@ void swap(Node *a, Node *b){
     b->operation = aux_char;
 }
 
-
-void addFile(const char *fileName, const char *playerName, int elapsed)
+void addFile(const char *fileName, const char *playerName, float elapsed)
 {
-
     FILE *file = fopen(fileName, "a"); // Abe o arquivo para adicionar a pontuação
     if (file != NULL)
     {
-        fprintf(file, "%s: %d\n", playerName, elapsed);
+        fprintf(file, "%s: %f\n", playerName, elapsed);
         fclose(file);
     }
     else
@@ -497,23 +505,3 @@ void addFile(const char *fileName, const char *playerName, int elapsed)
     }
 
 }
-
-
-// void addFile(FILE)
-// {
-//     Player *newPlayer = (Player*)malloc(sizeof(Player));
-
-
-//     FILE *file = fopen("ranking.txt", "a"); // Abe o arquivo para adicionar a pontuação
-//     if (file != NULL)
-//     {
-//         fprintf(file, "%s: %d\n", newPlayer->name, newPlayer->time);
-//         fclose(file);
-//     }
-//     else
-//     {
-//         printf("Não foi possível abrir o arquivo de pontuações.");
-//     }
-
-// }
-
