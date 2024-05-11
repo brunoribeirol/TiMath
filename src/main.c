@@ -281,7 +281,6 @@ void game(){
         result = aux_number;
     }
 
-
     gettimeofday(&end, NULL);  // End timing
 
     newPlayer->time = (end.tv_sec - start.tv_sec) + (end.tv_usec - start.tv_usec) / 1000000.0;
@@ -387,8 +386,6 @@ void random_numbers_list(Node **head, Node **tail, int first_number){
         add_node(head, tail, number, operation);
     }
 }
-
-
 
 void add_node(Node **head, Node **tail, int number, char operation){
     Node *newNode = (Node*)malloc(sizeof(Node));
@@ -506,12 +503,12 @@ void swap(Node *a, Node *b){
     b->operation = aux_char;
 }
 
-void addFile(const char *fileName, const char *playerName, float elapsed)
+void addFile(const char *fileName, const char *playerName, float playerTime)
 {
     FILE *file = fopen(fileName, "a"); // Abe o arquivo para adicionar a pontuação
     if (file != NULL)
     {
-        fprintf(file, "%s: %f\n", playerName, elapsed);
+        fprintf(file, "%s: %.3f\n", playerName, playerTime);
         fclose(file);
     }
     else
