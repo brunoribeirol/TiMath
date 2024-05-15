@@ -6,6 +6,12 @@
 #include <stdbool.h>
 #include <sys/time.h> //precisa
 
+#include "screen.h"
+#include "keyboard.h"
+#include "timer.h"
+//#include "data.h"
+#include "animations.h"
+
 #define RED_BG "\e[41m"
 #define BOLD_YEL "\e[1;33m"
 #define BLU "\e[0;34m"
@@ -17,9 +23,15 @@
 #define reset "\e[0m"
 
 #define GAME_SIZE 10
-//Ajietar range
+
+#define RANGE_MIN_SUM 1
+#define RANGE_MAX_SUM 300
+
 #define RANGE_MIN 1
 #define RANGE_MAX 10
+
+#define RANGE_MIN_DIV 1
+#define RANGE_MAX_DIV 20
 
 #define NAME_SIZE 50
 
@@ -111,53 +123,6 @@ int main()
     return 0;
 }
 
-// FALTA AJEITAR
-void tiMath(){
-    printf(BMAG
-
-    "######   ####### ##   ##          ##   ##   ####    ##   ##  #####     #####\n"
-    "##  ##   ##   #  ### ###           ##   ##    ##     ###  ##   ## ##   ##   ##\n"
-    "##  ##   ## #    #######            ## ##     ##     #### ##   ##  ##  ##   ##\n"
-    "#####    ####    #######            ## ##     ##     ## ####   ##  ##  ##   ##\n"
-    "##  ##   ## #    ## # ##             ###      ##     ##  ###   ##  ##  ##   ##\n"
-    "##  ##   ##   #  ##   ##             ###      ##     ##   ##   ## ##   ##   ##\n"
-    "######   ####### ##   ##              #      ####    ##   ##   #####    #####\n");
-    
-    printf("\n");
-    
-    printf(BMAG
-
-    "                         ##      #####\n"
-    "                        ####    ##   ##\n"
-    "                       ##  ##   ##   ##\n"
-    "                       ##  ##   ##   ##\n"
-    "                       ######   ##   ##\n"
-    "                       ##  ##   ##   ##\n"
-    "                       ##  ##    #####\n"
-
-    );
-
-    printf("\n");
-
-    printf(BMAG
-    "         ######    ####    ##   ##    ##     ######   ##   ##\n"
-    "         # ## #     ##     ### ###   ####    # ## #   ##   ##\n"
-    "           ##       ##     #######  ##  ##     ##     ##   ##\n"
-    "           ##       ##     #######  ##  ##     ##     #######\n"
-    "           ##       ##     ## # ##  ######     ##     ##   ##\n"
-    "           ##       ##     ##   ##  ##  ##     ##     ##   ##\n"
-    "          ####     ####    ##   ##  ##  ##    ####    ##   ##\n" reset);
-
-    sleep(1);
-}
-
-void menu(){
-    printf(BOLD_YEL "\n----- MENU PRINCIPAL -----\n" reset);
-    printf(BLU "1. Jogar TiMath\n" reset);
-    printf(GRN "2. Visualizar Ranking\n" reset);
-    printf(CYN "3. Sair\n" reset);
-}
-
 // FALTA
 void game(){
     displayGame();
@@ -233,31 +198,6 @@ void game(){
     // free(newPlayer);
 }
 
-void displayGame(){
-    printf(BMAG
-
-    
-    "##   ##   #####   #####     #####              ##     ####     #######    ##     ######    #####   ######    ####     #####\n"
-    "### ###  ##   ##   ## ##   ##   ##            ####     ##       ##   #   ####    # ## #   ##   ##   ##  ##    ##     ##   ##\n"
-    "#######  ##   ##   ##  ##  ##   ##           ##  ##    ##       ## #    ##  ##     ##     ##   ##   ##  ##    ##     ##   ##\n"
-    "#######  ##   ##   ##  ##  ##   ##           ##  ##    ##       ####    ##  ##     ##     ##   ##   #####     ##     ##   ##\n"
-    "## # ##  ##   ##   ##  ##  ##   ##           ######    ##   #   ## #    ######     ##     ##   ##   ## ##     ##     ##   ##\n"
-    "##   ##  ##   ##   ## ##   ##   ##           ##  ##    ##  ##   ##   #  ##  ##     ##     ##   ##   ##  ##    ##     ##   ##\n"
-    "##   ##   #####   #####     #####            ##  ##   #######  #######  ##  ##    ####     #####   #### ##   ####     #####\n" reset);
-
-    sleep(1);
-
-    // //     printf(BMAG
-
-    // "##   ##   #####   #####     #####              ####   ######   #######   #####     ####   #######  ##   ##  ######   #######\n"
-    // "### ###  ##   ##   ## ##   ##   ##            ##  ##   ##  ##   ##   #  ##   ##   ##  ##   ##   #  ###  ##  # ## #    ##   #\n"
-    // "#######  ##   ##   ##  ##  ##   ##           ##        ##  ##   ## #    #        ##        ## #    #### ##    ##      ## #\n"
-    // "#######  ##   ##   ##  ##  ##   ##           ##        #####    ####     #####   ##        ####    ## ####    ##      ####\n"
-    // "## # ##  ##   ##   ##  ##  ##   ##           ##        ## ##    ## #         ##  ##        ## #    ##  ###    ##      ## #\n"
-    // "##   ##  ##   ##   ## ##   ##   ##            ##  ##   ##  ##   ##   #  ##   ##   ##  ##   ##   #  ##   ##    ##      ##   #\n"
-    // "##   ##   #####   #####     #####              ####   #### ##  #######   #####     ####   #######  ##   ##   ####    #######\n" reset);
-}
-
 void random_numbers_list(Node **head, Node **tail, int first_number){
     int number;
     int result = first_number;
@@ -293,6 +233,7 @@ void random_numbers_list(Node **head, Node **tail, int first_number){
         
         add_node(head, tail, number, operation);
     }
+
 }
 
 void add_node(Node **head, Node **tail, int number, char operation){
@@ -438,16 +379,7 @@ void addFile(const char *fileName, const char *playerName, float playerTime)
 }
 
 void displayRanking(){
-
-    printf(BMAG
-
-    "  ######     ##     ##   ##  ###  ##   ####    ##   ##    ####\n"
-    "  ##  ##   ####    ###  ##   ##  ##    ##     ###  ##   ##  ##\n"
-    "  ##  ##  ##  ##   #### ##   ## ##     ##     #### ##  ##\n"
-    "  #####   ##  ##   ## ####   ####      ##     ## ####  ##\n"
-    "  ## ##   ######   ##  ###   ## ##     ##     ##  ###  ##  ###\n"
-    "  ##  ##  ##  ##   ##   ##   ##  ##    ##     ##   ##   ##  ##\n"
-    " #### ##  ##  ##   ##   ##  ###  ##   ####    ##   ##    #####\n" reset);
+    ranking();
 
     Player *players = readFile("ranking.txt");
     if (players == NULL) {
