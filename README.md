@@ -1,4 +1,4 @@
-# TIMATH
+<h1 align="center">TiMath</h1>
 
 <p align="center">
   <img src="https://img.shields.io/github/repo-size/brunoribeirol/jogoAED?style=flat" alt="Repository Size" />
