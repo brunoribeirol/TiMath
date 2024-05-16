@@ -16,7 +16,7 @@ Referência: "Pequenos Gênios" - Domingão com o Huck
 - **Visualizar Ranking:** Visualizar o ranking dos jogadores com base em suas pontuações
 - **Sair:** Encerra o programa
 
-## Instruções de Compilação e Execução:
+## Instruções de Compilação e Execução
 
 ```sh
 gcc ./src/*.c -I./include -o jogoAED
@@ -60,8 +60,7 @@ sua pontuação correspondente.
 - O código utiliza a biblioteca padrão `stdio.h`,
   `stdlib.h`, `string.h`, `unistd.h`,
   `time.h`, `stdbool.h`, `sys/time.h` e
-  as bibliotecas customizadas `screen.h`,
-  `keyboard.h`, `timer.h`.
+  as bibliotecas customizadas `animations.h screen.h`
 
   - A pontuação é salva no arquivo `ranking.txt` após cada jogo.
 
