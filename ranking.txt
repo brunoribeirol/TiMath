@@ -1,4 +1,3 @@
 Igor: 14.033
 bruno: 47.327
 vini: 46.058
-testte: 22.884

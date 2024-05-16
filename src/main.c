@@ -5,17 +5,15 @@ void random_numbers_list(Node **head, Node **tail, int first_number){
     int result = first_number;
     char operation;
 
-    for(int i = 0; i < GAME_SIZE; i++) {
+     for(int i = 0; i < GAME_SIZE; i++) {
         operation = getOperation();
 
         if(i == 0){
             operation = '+';
         }
 
-        if(isPrime(result)){
-            while(operation == '/'){
-                operation = getOperation();
-            }
+        while(isPrime(result) && operation == '/'){
+            operation = getOperation();
         }
 
         number = getRandomNumber(RANGE_MIN_SUM, RANGE_MAX_SUM);
@@ -39,6 +37,7 @@ void random_numbers_list(Node **head, Node **tail, int first_number){
             case '/': result = result / number; break;
         }
         
+        //printf("\n %c %d \n", operation, number);
         add_node(head, tail, number, operation);
     }
 }
