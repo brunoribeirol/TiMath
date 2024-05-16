@@ -3,27 +3,11 @@
 #include <string.h>
 #include <unistd.h>
 
-
-#include "animations.h"
-
-#define RED_BG "\e[41m"
-#define BOLD_YEL "\e[1;33m"
-#define BLU "\e[0;34m"
-#define GRN "\e[0;32m"
-#define CYN "\e[0;36m"
-#define BLK "\e[0;30m"
-#define BMAG "\e[1;35m"
-#define BOLD_BLUE "\e[1;34m"
-#define BOLD_CYAN "\e[1;36m"
-#define BLINK "\e[5m"
-#define BOLD_GREEN "\e[1;32m"
+#include "config.h"
 
 
-#define reset "\e[0m"
 
 void tiMath(){
-   
-
     printf("\n");
     
     printf(BMAG
@@ -36,7 +20,8 @@ void tiMath(){
         "\t\t    / _` | / _ \\ \n"
         "\t\t   | (_| || (_) |\n"
         "\t\t    \\__,_| \\___/ \n"
-        BOLD_CYAN" ______   __     __    __     ______     ______   __  __    \n"
+        BOLD_CYAN
+        " ______   __     __    __     ______     ______   __  __    \n"
         "/\\__  _\\ /\\ \\   /\\ \"-./  \\   /\\  __ \\   /\\__  _\\ /\\ \\_\\ \\   \n"
         "\\/_/\\ \\/ \\ \\ \\  \\ \\ \\-./\\ \\  \\ \\  __ \\  \\/_/\\ \\/ \\ \\  __ \\  \n"
         "   \\ \\_\\  \\ \\_\\  \\ \\_\\ \\ \\_\\  \\ \\_\\ \\_\\    \\ \\_\\  \\ \\_\\ \\_\\ \n"
@@ -62,11 +47,10 @@ void displayGame(){
         "|___/   /_/  |_|/_____//_____/   /_/ |_/   /_____/  \\____/  (_)   \n"
         "                                                                  \n"
     reset);
-    sleep(2);
+    sleep(1);
 }
 
 void ranking(){
-
     printf(BOLD_YEL
         "    ____     ___     _   __    __  __   ____    _   __   ______\n"
         "   / __ \\   /   |   / | / /   / / /_/  /  _/   / | / /  / ____/\n"

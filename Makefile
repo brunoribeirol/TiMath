@@ -9,13 +9,13 @@ INCLUDE_DIR = include
 SRC_DIR = src
 
 # Source files
-SRCS = $(SRC_DIR)/main.c $(SRC_DIR)/animations.c
+SRCS = $(SRC_DIR)/main.c $(SRC_DIR)/animations.c $(SRC_DIR)/data.c $(SRC_DIR)/random.c
 
 # Object files
 OBJS = $(SRCS:.c=.o)
 
 # Executable
-TARGET = jogoAED
+TARGET = game
 
 # Include directories
 INC_DIRS = -I$(INCLUDE_DIR)
