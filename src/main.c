@@ -19,6 +19,10 @@
 #define CYN "\e[0;36m"
 #define BLK "\e[0;30m"
 #define BMAG "\e[1;35m"
+#define BLINK "\e[5m"
+#define BG_GREEN "\e[42m"
+#define MAGENTA "\e[0;35m"
+#define GREEN "\e[0;32m"
 
 #define reset "\e[0m"
 
@@ -125,7 +129,7 @@ int main()
 
 // FALTA
 void game(){
-    displayGame();
+    
 
     Player *newPlayer = (Player*)malloc(sizeof(Player));
 
@@ -133,6 +137,8 @@ void game(){
     while ((getchar()) != '\n');
     fgets(newPlayer->name, NAME_SIZE, stdin);
     newPlayer->name[strcspn(newPlayer->name, "\n")] = 0;
+
+    displayGame();
 
     Node *head = NULL;
     Node *tail = NULL;
@@ -146,7 +152,6 @@ void game(){
     int user_answer;
 
     random_numbers_list(&head, &tail, firstNumber);
-    //bubble_sort(&head, &tail);
 
     struct timeval start;
     struct timeval end;
@@ -430,9 +435,14 @@ void printPlayers(Player *head) {
     Player *current = head;
     int place=1;
     while (current != NULL) {
-        if (place<=3) {
-            printf(GRN "%d. %s: %.3f segundos\n" reset , place, current->name, current->time);
-        } else {
+        if (place==1) {
+            printf(GREEN BLINK"%d. %s: %.3f segundos\n" reset , place, current->name, current->time);
+        } else if (place==2) {
+            printf(CYN"%d. %s: %.3f segundos\n" reset , place, current->name, current->time);
+        } else if (place==3) {
+            printf(MAGENTA"%d. %s: %.3f segundos\n" reset , place, current->name, current->time);
+        }
+        else {
             printf("%d. %s: %.3f segundos\n", place, current->name, current->time);
         }
         current = current->next;

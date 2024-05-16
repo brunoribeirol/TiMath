@@ -58,6 +58,8 @@
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "files.associations": {
     "stdio.h": "c",
-    "keyboard.h": "c"
+    "keyboard.h": "c",
+    "animations.h": "c",
+    "screen.h": "c"
   }
 }
