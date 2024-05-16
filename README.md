@@ -50,14 +50,10 @@ sua pontuação correspondente.
 
 ## Equipe
 
-- <a href="https://github.com/brunoribeirol">Bruno Ribeiro</a> -
-  brlla@cesar.school 📩
-- <a href="https://github.com/Zabbak">Lucas Kabbaz</a> - lbk@cesar.school
-  📩
-- <a href="https://github.com/igoralvesa">Igor Alves</a> -
-  iaa@cesar.school 📩
-- <a href="https://github.com/vinipetribu">Vinícius Petribu</a> -
-  vclp@cesar.school 📩
+- [**Bruno Ribeiro**](https://github.com/brunoribeirol) - [📩 brlla@cesar.school](mailto:brlla@cesar.school)
+- [**Lucas Kabbaz**](https://github.com/Zabbak) - [📩 lbk@cesar.school](mailto:lbk@cesar.school)
+- [**Igor Alves**](https://github.com/igoralvesa) - [📩 iaa@cesar.school](mailto:iaa@cesar.school)
+- [**Vinícius Petribu**](https://github.com/vinipetribu) - [📩 vclp@cesar.school](mailto:vclp@cesar.school)
 
 ## Notas Adicionais
 

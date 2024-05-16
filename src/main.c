@@ -6,9 +6,6 @@
 #include <stdbool.h>
 #include <sys/time.h> 
 
-#include "screen.h"
-#include "keyboard.h"
-#include "timer.h"
 //#include "data.h"
 #include "animations.h"
 

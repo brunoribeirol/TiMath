@@ -5,16 +5,4 @@ www: 29.651094
 IIII: 24.967619
 awdwa: 24.310966
 igor: 15.967
-Ig: 62.644
-rr: 28.585
-aaaaaa: 21.471
-wawad: 25.158
-igor: 78.824
-wwww: 19.004
-jrfherjv: 39.849
-vinii: 107.726
-efkmnvefk: 39.467
-dd: 31.810
-efjknvefkonvkefjnmvkefv: 33.782
-didi: 38.068
-w: 62.595
+bruno: 35.240

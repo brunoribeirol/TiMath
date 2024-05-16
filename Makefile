@@ -9,7 +9,7 @@ INCLUDE_DIR = include
 SRC_DIR = src
 
 # Source files
-SRCS = $(SRC_DIR)/main.c $(SRC_DIR)/keyboard.c $(SRC_DIR)/screen.c $(SRC_DIR)/timer.c $(SRC_DIR)/animations.c
+SRCS = $(SRC_DIR)/main.c $(SRC_DIR)/animations.c
 
 # Object files
 OBJS = $(SRCS:.c=.o)
