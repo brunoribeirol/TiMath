@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <stdbool.h>
-#include <sys/time.h> //precisa
+#include <sys/time.h> 
 
 #include "screen.h"
 #include "keyboard.h"
@@ -43,7 +43,7 @@ typedef struct Player
 {
     char name[NAME_SIZE];
     float time;
-    struct Player *next; //precisa???
+    struct Player *next;
 } Player;
 
 typedef struct Node
@@ -127,7 +127,6 @@ int main()
     return 0;
 }
 
-// FALTA
 void game(){
     
 
@@ -178,7 +177,7 @@ void game(){
                 break;
 
         }
-       // printf("%d = %d %c %d\n", aux_number, result, operation, aux->number);
+
         print_equation(head_eq);
 
         scanf("%d", &user_answer);
@@ -191,16 +190,15 @@ void game(){
         result = aux_number;
     }
 
-    gettimeofday(&end, NULL);  // End timing
+    gettimeofday(&end, NULL);
 
     newPlayer->time = (end.tv_sec - start.tv_sec) + (end.tv_usec - start.tv_usec) / 1000000.0;
-    printf("You completed the questions in %.3f seconds.\n", newPlayer->time);
+    printf("Seu tempo foi de %.3f segundos\n", newPlayer->time);
 
     addFile("ranking.txt", newPlayer->name, newPlayer->time);
    
     free_numbers(&head, &tail);
     free_equations(&head_eq, &tail_eq);
-    // free(newPlayer);
 }
 
 void random_numbers_list(Node **head, Node **tail, int first_number){
@@ -371,7 +369,7 @@ void swap(Player *a, Player *b) {
 
 void addFile(const char *fileName, const char *playerName, float playerTime)
 {
-    FILE *file = fopen(fileName, "a"); // Abe o arquivo para adicionar a pontuação
+    FILE *file = fopen(fileName, "a");
     if (file != NULL)
     {
         fprintf(file, "%s: %.3f\n", playerName, playerTime);
