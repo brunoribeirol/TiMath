@@ -14,7 +14,7 @@
 #include "data.h"
 #include "random.h"
 
-#define GAME_SIZE 10
+#define GAME_SIZE 12
 
 #define NAME_SIZE 50
 

@@ -12,8 +12,10 @@ void random_numbers_list(Node **head, Node **tail, int first_number){
             operation = '+';
         }
 
-        while(isPrime(result) && operation == '/'){
-            operation = getOperation();
+        if(isPrime(result)){
+            while(operation == '/'){
+                operation = getOperation();
+            }
         }
 
         number = getRandomNumber(RANGE_MIN_SUM, RANGE_MAX_SUM);
@@ -37,19 +39,8 @@ void random_numbers_list(Node **head, Node **tail, int first_number){
             case '/': result = result / number; break;
         }
         
-        //printf("\n %c %d \n", operation, number);
         add_node(head, tail, number, operation);
     }
-
-    // int i = 0;
-    // while(i < GAME_SIZE){
-    //     operation = getOperation();
-
-
-    //     i++;
-    //     add_node(head, tail, number, operation);
-    // }
-
 }
 
 void game(){
@@ -83,42 +74,45 @@ void game(){
     add_in_equation(&head_eq, &tail_eq, str);
 
     Node *aux = head;
-    for(int i = 1; i <= 4; i++){
-        for(int j = 0; j < i; j++){
-            system("clear");
+    for(int i = 1; i <= 3; i++){
+       for(int x = 0; x < 2; x++){
+            for(int j = 0; j < i; j++){
+                system("clear");
+    
+                char operation = aux->operation;
+                str[0] = operation;
+                str[1] = '\0';
+                add_in_equation(&head_eq, &tail_eq, str);
+    
+                snprintf(str, sizeof(str), "%d", aux->number);
+                add_in_equation(&head_eq, &tail_eq, str);
+    
+                switch (operation){
+                    case '+': result += aux->number; break;
+                    case '-': result -= aux->number; break;
+                    case '*': result *= aux->number; break;
+                    case '/': result /= aux->number; break;
+                }
+    
+                aux = aux->next;
+            }
+            
+            add_in_equation(&head_eq, &tail_eq, "=");
+            print_equation(head_eq);
 
-            char operation = aux->operation;
-            str[0] = operation;
-            str[1] = '\0';
-            add_in_equation(&head_eq, &tail_eq, str);
+            scanf("%d", &user_answer);
+            while (user_answer != result) {
+                system("clear");
 
-            snprintf(str, sizeof(str), "%d", aux->number);
-            add_in_equation(&head_eq, &tail_eq, str);
-
-            switch (operation){
-                case '+': result += aux->number; break;
-                case '-': result -= aux->number; break;
-                case '*': result *= aux->number; break;
-                case '/': result /= aux->number; break;
+                printf(RED "Resposta incorreta, tente novamente.\n" reset);
+                print_equation(head_eq);
+                scanf("%d", &user_answer);
             }
 
-            aux = aux->next;
-        }
-        
-        add_in_equation(&head_eq, &tail_eq, "=");
-        print_equation(head_eq);
+            snprintf(str, sizeof(str), "%d", result);
+            add_in_equation(&head_eq, &tail_eq, str);
+       }
 
-        scanf("%d", &user_answer);
-        while (user_answer != result) {
-            system("clear");
-
-            printf(RED "Resposta incorreta, tente novamente.\n" reset);
-            print_equation(head_eq);
-            scanf("%d", &user_answer);
-        }
-
-        snprintf(str, sizeof(str), "%d", result);
-        add_in_equation(&head_eq, &tail_eq, str);
     }
 
     gettimeofday(&end, NULL);
