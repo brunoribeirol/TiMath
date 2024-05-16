@@ -1,3 +1,8 @@
 Igor: 14.033
-bruno: 47.327
 vini: 46.058
+bruno: 28.701
+margi: 90.820
+Leo Guedes: 29.220
+Leo: 22.724
+ian: 23.034
+

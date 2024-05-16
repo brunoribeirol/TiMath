@@ -19,8 +19,8 @@ void random_numbers_list(Node **head, Node **tail, int first_number){
         number = getRandomNumber(RANGE_MIN_SUM, RANGE_MAX_SUM);
 
         if(operation == '/'){
-            while(result % number != 0 ){
-                number = getRandomNumber(RANGE_MIN_DIV, RANGE_MIN_DIV);
+            while(result % number != 0 || number == 1){ 
+                number = getRandomNumber(RANGE_MIN_DIV, RANGE_MAX_DIV);
             }
         }
 
@@ -28,6 +28,11 @@ void random_numbers_list(Node **head, Node **tail, int first_number){
             while (result - number < 1){
                 number = getRandomNumber(RANGE_MIN_SUM, RANGE_MAX_SUM);
             }     
+        }
+
+        if (operation == '*' && number == 1)
+        {
+            number = getRandomNumber(RANGE_MIN_SUM, RANGE_MAX_SUM);
         }
 
         switch (operation) {
