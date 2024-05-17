@@ -6,7 +6,7 @@
   <a href="LICENSE.md"><img src="https://img.shields.io/github/license/brunoribeirol/jogoAED?style" alt="License" /></a>
 </p>
 
-O TiMath é um jogo desenvolvido em C, onde o jogador precisa responder 10 expressões matemáticas no menor tempo possível. Os números e as operações são gerados aleatoriamente no início do programa e armazenados em uma lista encadeada. O jogador só consegue avançar quando responder a expressão corretamente porque a próxima operação sempre utiliza o resultado da expressão anterior. O jogo vai ficando mais difícil de acordo com o avanço do jogador, ou seja, as expressões vão ficando maiores e mais complicadas.
+O TiMath é um jogo desenvolvido em C, onde o jogador precisa responder 6 expressões matemáticas no menor tempo possível. Os números e as operações são gerados aleatoriamente no início do programa e armazenados em uma lista encadeada. O jogador só consegue avançar quando responder a expressão corretamente porque a próxima operação sempre utiliza o resultado da expressão anterior. O jogo vai ficando mais difícil de acordo com o avanço do jogador, ou seja, as expressões vão ficando maiores e mais complicadas.
 
 Referência: "Pequenos Gênios" - Domingão com o Huck
 
@@ -19,13 +19,13 @@ Referência: "Pequenos Gênios" - Domingão com o Huck
 ## Instruções de Compilação e Execução
 
 ```sh
-gcc ./src/*.c -I./include -o jogoAED
+gcc ./src/*.c -I./include -o game
 ```
 
 Seguido por
 
 ```sh
-./jogoAED
+./game
 ```
 
 Ou simplesmente
@@ -37,16 +37,12 @@ make run
 ## Regras do Jogo
 
 - Responder corretamente aa expressões matemáticas no menor tempo que conseguir
-- O jogo termina quando o jogador responde todas as expressões
-  corretamente
-- A pontuação é baseada no tempo em que o jogador responde todas as
-  expressões
+- O jogo termina quando o jogador responde todas as expressões corretamente
+- A pontuação é baseada no tempo em que o jogador responde todas as expressões
 
 ## Arquivo de Pontuação
 
-As pontuações dos jogadores são salvas no arquivo
-`ranking.txt`. Cada linha do arquivo contém o nome do jogador e
-sua pontuação correspondente.
+As pontuações dos jogadores são salvas no arquivo `ranking.txt`. Cada linha do arquivo contém o nome do jogador e sua pontuação correspondente.
 
 ## Equipe
 
@@ -57,17 +53,9 @@ sua pontuação correspondente.
 
 ## Notas Adicionais
 
-- O código utiliza a biblioteca padrão `stdio.h`,
-  `stdlib.h`, `string.h`, `unistd.h`,
-  `time.h`, `stdbool.h`, `sys/time.h` e
-  as bibliotecas customizadas `animations.h screen.h`
-
-  - A pontuação é salva no arquivo `ranking.txt` após cada jogo.
-
-  - Este projeto foi desenvolvido como um exercício para prática nossa
-    prática em programação na linguagem C, focando em Estruturas de Dados e
-    Algoritmos de Ordenação
-
-  - Qualquer contribuição ou sugestão é bem-vinda.
+- O código utiliza a biblioteca padrão `stdio.h`, `stdlib.h`, `string.h`, `unistd.h`, `time.h`, `stdbool.h`, `sys/time.h`, `math.h` e as bibliotecas customizadas `animations.h`, `config.h`, `data.h` e `random.h`
+- A pontuação é salva no arquivo `ranking.txt` após cada jogo.
+- O objetivo desse projeto era assimilar o conhecimento em Estruturas de Dados eAlgoritmos de Ordenação
+- Qualquer contribuição ou sugestão é bem-vinda.
 
 Divirta-se jogando TiMath!
